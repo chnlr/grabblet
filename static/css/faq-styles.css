@@ -26,7 +26,7 @@ body {
     text-align: center;
     max-width: 700px;
     width: 100%;
-    margin-top: 50px;
+    margin: 20px; /* Added margin to create space from the edges */
 }
 
 /* Navigation Bar */
@@ -69,15 +69,12 @@ header p {
 /* FAQ Content */
 .faq-content {
     text-align: left;
-    margin-top: 40px;
-    max-width: 700px; /* Match width with the home page */
-    margin-left: auto;
-    margin-right: auto;
+    margin: 20px auto; /* Centered with margin */
     padding: 20px;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    max-height: 500px; /* Adjust height for scrollability */
+    max-height: 400px; /* Reduced height for smaller content */
     overflow-y: auto;  /* Make the content scrollable */
 }
 
