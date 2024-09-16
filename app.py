@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, send_file
 import os
 import yt_dlp
 
@@ -16,6 +16,10 @@ def faq():
 @app.route('/about')
 def about():
     return render_template('about.html')
+
+@app.route('/download-video')
+def download_video():
+    return send_file('path-to-video.mp4', as_attachment=True, download_name='video.mp4')
 
 
 @app.route('/download', methods=['POST'])
