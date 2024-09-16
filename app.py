@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request
 import os
 import yt_dlp
 
@@ -12,11 +12,9 @@ def index():
 def faq():
     return render_template('faq.html')
 
-
 @app.route('/about')
 def about():
     return render_template('about.html')
-
 
 @app.route('/download', methods=['POST'])
 def download_video():
