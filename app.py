@@ -23,7 +23,8 @@ def download_video():
     
     ydl_opts = {
         'format': 'best',
-        'outtmpl': os.path.join(download_folder, '%(title)s.%(ext)s')
+        'outtmpl': os.path.join(download_folder, '%(title)s.%(ext)s'),
+        'cookiefile': 'path-to-your-cookies.txt'  # Replace with your cookies file path
     }
 
     try:
