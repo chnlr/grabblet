@@ -28,15 +28,14 @@ def download_video():
     download_folder = os.path.join(os.path.expanduser("~"), "Downloads")
     
     ydl_opts = {
-        'format': 'best',  # Automatically choose the best format
+        'format': 'best',
         'outtmpl': os.path.join(download_folder, '%(title)s.%(ext)s')
     }
 
-    # Use yt-dlp's automatic platform detection based on URL
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         ydl.download([video_url])
 
-    return render_template('download.html')  # Redirect to download complete page
+    return render_template('download.html')  # Render a confirmation page for download completion
 
 if __name__ == '__main__':
     app.run(debug=True)
