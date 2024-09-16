@@ -36,10 +36,10 @@
         </header>
 
         <main>
-            <form action="/download" method="post">
+            <form id="download-form" action="/download" method="post">
                 <input type="text" id="url" name="url" placeholder="Paste video URL here" required>
                 <button type="submit">Download</button>
-            </form>
+            </form>            
         </main>
     </div>
     <script src="{{ url_for('static', filename='js/app.js') }}"></script>
