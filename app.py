@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, send_file
+from flask import Flask, render_template, request, redirect, url_for
 import os
 import yt_dlp
 
@@ -17,10 +17,6 @@ def faq():
 def about():
     return render_template('about.html')
 
-@app.route('/download-video')
-def download_video():
-    return send_file('path-to-video.mp4', as_attachment=True, download_name='video.mp4')
-
 
 @app.route('/download', methods=['POST'])
 def download_video():
@@ -28,14 +24,15 @@ def download_video():
     download_folder = os.path.join(os.path.expanduser("~"), "Downloads")
     
     ydl_opts = {
-        'format': 'best',
+        'format': 'best',  # Automatically choose the best format
         'outtmpl': os.path.join(download_folder, '%(title)s.%(ext)s')
     }
 
+    # Use yt-dlp's automatic platform detection based on URL
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         ydl.download([video_url])
 
-    return render_template('download.html')  # Render a confirmation page for download completion
+    return render_template('download.html')  # Redirect to download complete page
 
 if __name__ == '__main__':
     app.run(debug=True)
