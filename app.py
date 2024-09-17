@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, redirect, url_for
 import os
 import yt_dlp
 
@@ -19,22 +19,21 @@ def about():
 @app.route('/get-video-url', methods=['POST'])
 def get_video_url():
     video_url = request.json.get('url')
-    
+
     ydl_opts = {
         'format': 'best',
         'quiet': True,
         'noplaylist': True,
-        'skip_download': True  # Don't download, just get the URL
+        'skip_download': True  # Just get the URL
     }
-    
+
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         result = ydl.extract_info(video_url, download=False)
         video_link = result.get('url', None)
-    
+
     if video_link:
         return jsonify({'video_url': video_link})
     return jsonify({'error': 'Failed to retrieve video'}), 500
-
 
 @app.route('/download', methods=['POST'])
 def download_video():
@@ -53,6 +52,10 @@ def download_video():
         return render_template('download.html')
     except Exception as e:
         return f"Error: {str(e)}", 500
+    
+@app.route('/mobile-download/<path:video_url>')
+def mobile_download(video_url):
+    return render_template('mobile-download.html', video_url=video_url)
 
 if __name__ == '__main__':
     app.run(debug=True)
