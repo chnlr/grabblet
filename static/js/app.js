@@ -1,12 +1,22 @@
 document.getElementById('download-form').addEventListener('submit', function(event) {
     event.preventDefault();
     const url = document.getElementById('url').value;
-    alert('Downloading: ' + url);
-
-    // Function to detect if the user is on a mobile device
-    function isMobileDevice() {
-        return /Mobi|Android/i.test(navigator.userAgent);
-    }
+    fetch('/get-video-url', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: url })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.video_url) {
+            const a = document.createElement('a');
+            a.href = data.video_url;
+            a.download = 'video.mp4';
+            a.click();
+        } else {
+            alert('Failed to retrieve video.');
+        }
+    });
 
     if (isMobileDevice()) {
         // For mobile devices, create a temporary link for the user to download manually
