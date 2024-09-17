@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, redirect, url_for
+from flask import Flask, render_template, request, jsonify, redirect, url_for, send_file
 import os
 import yt_dlp
 
@@ -43,13 +43,16 @@ def download_video():
     ydl_opts = {
         'format': 'best',
         'outtmpl': os.path.join(download_folder, '%(title)s.%(ext)s'),
-        'cookiefile': 'path-to-your-cookies.txt'  # Replace with your cookies file path
+        'cookiefile': 'path-to-your-cookies.txt'  # Replace with your cookies file path if needed
     }
 
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            info_dict = ydl.extract_info(video_url, download=False)
+            filename = ydl.prepare_filename(info_dict)
             ydl.download([video_url])
-        return render_template('download.html')
+
+        return send_file(filename, as_attachment=True)
     except Exception as e:
         return f"Error: {str(e)}", 500
     
